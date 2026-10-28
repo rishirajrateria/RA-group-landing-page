@@ -85,6 +85,7 @@
 
   /* about */
   .about { padding: clamp(28px, 5vw, 56px); }
+  .about p + p { margin-top: 16px; }
   .about p { color: #3b3b44; font-size: clamp(16px, 2vw, 19px); max-width: 760px; margin-top: 22px; font-weight: 300; }
 
   /* founder */
@@ -116,6 +117,8 @@
   /* map */
   .map { padding: clamp(16px, 3vw, 36px); margin-top: 28px; }
   .map img { width: 100%; height: auto; display: block; }
+  .cities { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .cities span { font-size: 13px; padding: 6px 14px; border-radius: 999px; background: var(--glass-strong); border: 1px solid var(--line); }
 
   /* contact */
   .contact { padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -157,6 +160,7 @@
         <div class="eyebrow">About our business</div>
         <h2>Built on vision, nationalism and philanthropy.</h2>
         <p>A visionary entrepreneur, a committed nationalist and a philanthropist, Haji Ramzan Ali helped pave the path to a business conglomerate from Eastern India and beyond by seeding pioneering businesses in different sectors. With diversification and induction of professionals to establish a venerable business of excellence, the Group proudly heads manufacturing companies in different sectors, construction and property development companies, export houses, and a charity organisation.</p>
+        <p>The foundation of the R.A. Group was laid before 1947. Like many young nationalists of the time, Haji Ramzan Ali left his job with a jute mill and started his own enterprise, R.A. Perfumery Works, from a small shop in Central Calcutta, still the Group&rsquo;s flagship business today.</p>
       </div>
     </div>
   </section>
@@ -210,6 +214,10 @@
       <div class="map glass">
         <img src="assets/map.png" alt="World map showing R. A. Group locations" loading="lazy">
       </div>
+      <div class="cities">
+        <span>New York</span><span>London</span><span>Madrid</span><span>Milan</span>
+        <span>Moscow</span><span>Dubai</span><span>India</span><span>Singapore</span>
+      </div>
     </div>
   </section>
 
@@ -221,11 +229,12 @@
           <div class="eyebrow">Contact</div>
           <h2>Let’s talk.</h2>
         </div>
-        <!-- TODO: replace with the details from rapsignal.com/contact-… -->
         <dl>
-          <div><dt>Address</dt><dd>[Registered office address]</dd></div>
-          <div><dt>Phone</dt><dd><a href="tel:+910000000000">[+91 00000 00000]</a></dd></div>
-          <div><dt>Email</dt><dd><a href="mailto:info@example.com">[info@example.com]</a></dd></div>
+          <div><dt>Registered office (Unit 1)</dt><dd>78, Madan Mohan Burman St, Kolkata, 700007</dd></div>
+          <div><dt>Unit 2</dt><dd>Salap, Howrah, Kolkata, West Bengal 711409</dd></div>
+          <div><dt>Phone</dt><dd><a href="tel:+919051540406">+91 90515 40406</a></dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:info@rapsignal.com">info@rapsignal.com</a></dd></div>
+          <div><dt>Office hours</dt><dd>Monday – Saturday, 10 AM – 5 PM</dd></div>
         </dl>
       </div>
     </div>
