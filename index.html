@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>R. A. Group — Trusted By Generations</title>
+<meta name="description" content="R. A. Group — a business conglomerate from Eastern India, trusted by generations since 1946.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafafa;
+    --ink: #111114;
+    --muted: #6b6b76;
+    --line: rgba(17, 17, 20, .08);
+    --glass: rgba(255, 255, 255, .6);
+    --glass-strong: rgba(255, 255, 255, .8);
+    --accent: #2f55b8;
+    --shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 20px 50px -20px rgba(30, 40, 80, .15);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* soft colour fields behind the glass */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(40vw 40vw at 12% 8%, rgba(47,85,184,.14), transparent 70%),
+      radial-gradient(35vw 35vw at 90% 30%, rgba(232,80,90,.10), transparent 70%),
+      radial-gradient(45vw 45vw at 30% 95%, rgba(120,160,255,.12), transparent 70%);
+  }
+  .wrap { width: min(1080px, 100% - 32px); margin-inline: auto; }
+  section { padding: clamp(56px, 9vw, 110px) 0; }
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,.9);
+    outline: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+  }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px; font-weight: 500;
+  }
+  h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 500; letter-spacing: -.02em; line-height: 1.2; }
+
+  /* nav */
+  nav {
+    position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; gap: 4px; padding: 6px;
+    border-radius: 999px; width: max-content; max-width: calc(100% - 24px);
+  }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 13px;
+    padding: 7px 14px; border-radius: 999px; transition: .2s; white-space: nowrap;
+  }
+  nav a:hover { color: var(--ink); background: rgba(17,17,20,.05); }
+  @media (max-width: 640px) { nav a:nth-child(n+4) { display: none; } }
+
+  /* hero */
+  .hero { min-height: 100svh; display: grid; place-items: center; text-align: center; padding-top: 96px; }
+  .hero img { mix-blend-mode: multiply; width: clamp(150px, 22vw, 210px); height: auto; }
+  .hero h1 {
+    font-size: clamp(34px, 6.5vw, 68px); font-weight: 300; letter-spacing: -.03em;
+    line-height: 1.1; margin-top: 18px;
+  }
+  .hero h1 b { font-weight: 600; }
+  .hero p { color: var(--muted); margin: 18px auto 0; max-width: 460px; }
+  .btn {
+    display: inline-block; margin-top: 30px; padding: 12px 26px; border-radius: 999px;
+    background: var(--ink); color: #fff; text-decoration: none; font-size: 14px; transition: .2s;
+  }
+  .btn:hover { transform: translateY(-1px); background: #000; }
+
+  /* about */
+  .about { padding: clamp(28px, 5vw, 56px); }
+  .about p { color: #3b3b44; font-size: clamp(16px, 2vw, 19px); max-width: 760px; margin-top: 22px; font-weight: 300; }
+
+  /* founder */
+  .founder {
+    display: grid; grid-template-columns: 1.4fr 1fr; align-items: stretch; overflow: hidden;
+    background: #000; color: #fff; border-radius: 24px; box-shadow: var(--shadow);
+  }
+  .founder .q { padding: clamp(28px, 5vw, 64px); }
+  .founder .mark { font-size: 64px; line-height: .6; color: rgba(255,255,255,.35); font-family: Georgia, serif; }
+  .founder blockquote {
+    font-size: clamp(20px, 3vw, 32px); font-weight: 300; line-height: 1.35; letter-spacing: -.01em; margin-top: 18px;
+  }
+  .founder cite { display: block; margin-top: 26px; font-style: normal; font-size: 13px; color: rgba(255,255,255,.6); }
+  .founder img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  @media (max-width: 720px) { .founder { grid-template-columns: 1fr; } .founder img { max-height: 360px; } }
+
+  /* brands */
+  .brands { padding: clamp(20px, 4vw, 48px); margin-top: 28px; }
+  .brands img { mix-blend-mode: multiply; width: 100%; max-width: 640px; display: block; margin: 0 auto; height: auto; }
+
+  /* industries */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 28px; }
+  .ind { padding: 26px; border-radius: 20px; transition: .25s; }
+  .ind:hover { transform: translateY(-3px); background: var(--glass-strong); }
+  .ind span { font-size: 12px; color: var(--accent); font-weight: 500; letter-spacing: .1em; }
+  .ind h3 { font-size: 18px; font-weight: 500; margin-top: 18px; letter-spacing: -.01em; }
+  .ind p { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+  /* map */
+  .map { padding: clamp(16px, 3vw, 36px); margin-top: 28px; }
+  .map img { width: 100%; height: auto; display: block; }
+
+  /* contact */
+  .contact { padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .contact dl { display: grid; gap: 18px; }
+  .contact dt { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .contact dd { margin-top: 2px; }
+  .contact a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); }
+  @media (max-width: 720px) { .contact { grid-template-columns: 1fr; } }
+
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 40px 16px 56px; }
+</style>
+</head>
+<body>
+
+<nav class="glass">
+  <a href="#about">About</a>
+  <a href="#founder">Founder</a>
+  <a href="#brands">Brands</a>
+  <a href="#industries">Industries</a>
+  <a href="#presence">Presence</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<main>
+  <!-- 6. Hero -->
+  <header class="hero">
+    <div class="wrap">
+      <img src="assets/logo.png" alt="R. A. Group — Since 1946">
+      <h1>Trusted by <b>generations.</b></h1>
+      <p>A diversified business group from Eastern India, building enduring businesses since 1946.</p>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+  </header>
+
+  <!-- 1. About -->
+  <section id="about">
+    <div class="wrap">
+      <div class="about glass">
+        <div class="eyebrow">About our business</div>
+        <h2>Built on vision, nationalism and philanthropy.</h2>
+        <p>A visionary entrepreneur, a committed nationalist and a philanthropist, Haji Ramzan Ali helped pave the path to a business conglomerate from Eastern India and beyond by seeding pioneering businesses in different sectors. With diversification and induction of professionals to establish a venerable business of excellence, the Group proudly heads manufacturing companies in different sectors, construction and property development companies, export houses, and a charity organisation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Founder quote -->
+  <section id="founder" style="padding-top:0">
+    <div class="wrap">
+      <figure class="founder">
+        <div class="q">
+          <div class="mark">&ldquo;</div>
+          <blockquote>Commitment, consistent quality and consideration for stakeholders is the cornerstone for a long lasting business relationship</blockquote>
+          <cite>Haji Ramzan Ali (1905–1989)</cite>
+        </div>
+        <img src="assets/founder.jpg" alt="Haji Ramzan Ali" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- 3. Brands -->
+  <section id="brands" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Our brands</div>
+      <h2>One group, many names.</h2>
+      <div class="brands glass">
+        <img src="assets/brands.png" alt="R.A.E, BREK, R Developers, R. A. Auto Engineering Works and Signal" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Industries -->
+  <section id="industries" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Industries</div>
+      <h2>Where we work.</h2>
+      <div class="grid">
+        <div class="ind glass"><span>01</span><h3>Manufacturing</h3><p>Pioneering companies across multiple sectors.</p></div>
+        <div class="ind glass"><span>02</span><h3>Tobacco &amp; Confectionery</h3><p>Household brands like Signal and BREK.</p></div>
+        <div class="ind glass"><span>03</span><h3>Auto Engineering</h3><p>Precision engineering and components.</p></div>
+        <div class="ind glass"><span>04</span><h3>Construction &amp; Property</h3><p>Real estate and property development.</p></div>
+        <div class="ind glass"><span>05</span><h3>Exports</h3><p>Export houses serving global markets.</p></div>
+        <div class="ind glass"><span>06</span><h3>Philanthropy</h3><p>A charity organisation giving back.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. World map -->
+  <section id="presence" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Global presence</div>
+      <h2>From Eastern India to the world.</h2>
+      <div class="map glass">
+        <img src="assets/map.png" alt="World map showing R. A. Group locations" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Contact -->
+  <section id="contact" style="padding-top:0">
+    <div class="wrap">
+      <div class="contact glass">
+        <div>
+          <div class="eyebrow">Contact</div>
+          <h2>Let’s talk.</h2>
+        </div>
+        <!-- TODO: replace with the details from rapsignal.com/contact-… -->
+        <dl>
+          <div><dt>Address</dt><dd>[Registered office address]</dd></div>
+          <div><dt>Phone</dt><dd><a href="tel:+910000000000">[+91 00000 00000]</a></dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:info@example.com">[info@example.com]</a></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="y">2026</span> R. A. Group · Since 1946</footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
