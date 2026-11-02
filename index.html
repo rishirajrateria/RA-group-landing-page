@@ -102,17 +102,16 @@
   .founder img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
   @media (max-width: 720px) { .founder { grid-template-columns: 1fr; } .founder img { max-height: 360px; } }
 
-  /* brands */
-  .brands { padding: clamp(20px, 4vw, 48px); margin-top: 28px; }
-  .brands img { mix-blend-mode: multiply; width: 100%; max-width: 640px; display: block; margin: 0 auto; height: auto; }
-
-  /* industries */
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: 28px; }
-  .ind { padding: 26px; border-radius: 20px; transition: .25s; }
-  .ind:hover { transform: translateY(-3px); background: var(--glass-strong); }
-  .ind span { font-size: 12px; color: var(--accent); font-weight: 500; letter-spacing: .1em; }
-  .ind h3 { font-size: 18px; font-weight: 500; margin-top: 18px; letter-spacing: -.01em; }
-  .ind p { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  /* brands & industries */
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+  .brand { padding: 28px 24px 26px; border-radius: 22px; display: flex; flex-direction: column; transition: .25s; }
+  .brand:hover { transform: translateY(-3px); background: var(--glass-strong); }
+  .brand .logo { height: 120px; display: flex; align-items: center; justify-content: center; }
+  .brand .logo img { max-width: 80%; max-height: 100px; width: auto; height: auto; }
+  .brand p { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); text-align: center;
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); line-height: 1.7; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 420px) { .grid { grid-template-columns: 1fr; } }
 
   /* map */
   .map { padding: clamp(16px, 3vw, 36px); margin-top: 28px; }
@@ -137,7 +136,6 @@
   <a href="#about">About</a>
   <a href="#founder">Founder</a>
   <a href="#brands">Brands</a>
-  <a href="#industries">Industries</a>
   <a href="#presence">Presence</a>
   <a href="#contact">Contact</a>
 </nav>
@@ -179,29 +177,20 @@
     </div>
   </section>
 
-  <!-- 3. Brands -->
+  <!-- 3 + 5. Brands & industries -->
   <section id="brands" style="padding-top:0">
     <div class="wrap">
-      <div class="eyebrow">Our brands</div>
-      <h2>One group, many names.</h2>
-      <div class="brands glass">
-        <img src="assets/brands.png" alt="R.A.E, BREK, R Developers, R. A. Auto Engineering Works and Signal" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Industries -->
-  <section id="industries" style="padding-top:0">
-    <div class="wrap">
-      <div class="eyebrow">Industries</div>
-      <h2>Where we work.</h2>
+      <div class="eyebrow">Our brands &amp; industries</div>
+      <h2>One group, many industries.</h2>
       <div class="grid">
-        <div class="ind glass"><span>01</span><h3>Manufacturing</h3><p>Pioneering companies across multiple sectors.</p></div>
-        <div class="ind glass"><span>02</span><h3>Tobacco &amp; Confectionery</h3><p>Household brands like Signal and BREK.</p></div>
-        <div class="ind glass"><span>03</span><h3>Auto Engineering</h3><p>Precision engineering and components.</p></div>
-        <div class="ind glass"><span>04</span><h3>Construction &amp; Property</h3><p>Real estate and property development.</p></div>
-        <div class="ind glass"><span>05</span><h3>Exports</h3><p>Export houses serving global markets.</p></div>
-        <div class="ind glass"><span>06</span><h3>Philanthropy</h3><p>A charity organisation giving back.</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-signal.png" alt="Signal" loading="lazy"></div><p>Tobacco, sweet supari, perfumes &amp; essential oils</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-brek.png" alt="BREK" loading="lazy"></div><p>Chocolate &amp; confectionery</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-rae.png" alt="R.A.E" loading="lazy"></div><p>Leather and allied products</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-icecream.png" alt="Ice-Cream Lab" loading="lazy"></div><p>Gourmet ice cream and shakes</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-mediterrano.png" alt="Mediterrano" loading="lazy"></div><p>Café and multi-cuisine restaurant</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-maamoul.png" alt="Maamoul" loading="lazy"></div><p>Biscuits, bread and cakes</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-auto.png" alt="R. A. Auto Engineering Works" loading="lazy"></div><p>Heavy and medium vehicle spares and chassis, metal fabrication and customised laser, robot / cobot machine supplier</p></div>
+        <div class="brand glass"><div class="logo"><img src="assets/brand-rdev.png" alt="R Developers" loading="lazy"></div><p>Real estate developer</p></div>
       </div>
     </div>
   </section>
