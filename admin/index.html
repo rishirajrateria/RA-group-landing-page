@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>R. A. Group — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafafa; --ink: #111114; --muted: #6b6b76; --line: rgba(17,17,20,.08);
+    --glass: rgba(255,255,255,.65); --accent: #2f55b8; --red: #e8505a;
+    --shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 20px 50px -24px rgba(30,40,80,.18);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1;
+    background: radial-gradient(40vw 40vw at 10% 0%, rgba(47,85,184,.13), transparent 70%),
+                radial-gradient(35vw 35vw at 95% 25%, rgba(232,80,90,.09), transparent 70%); }
+  .wrap { width: min(1180px, 100% - 32px); margin: 0 auto; padding: 28px 0 64px; }
+  .glass { background: var(--glass); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,.9); outline: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+  h1 { font-size: 20px; font-weight: 500; letter-spacing: -.01em; }
+  h2 { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: 14px; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  button, select, input { font: inherit; color: inherit; }
+  button, select, input[type=date] { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 10px; padding: 8px 12px; font-size: 13px; }
+  button { cursor: pointer; } button:hover { background: #fff; }
+  button.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .hidden { display: none !important; }
+
+  /* login */
+  #login { min-height: 100svh; display: grid; place-items: center; padding: 16px; }
+  .card { width: min(380px, 100%); padding: 32px; }
+  .card h1 { margin-bottom: 4px; } .card p { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+  .card label { display: block; font-size: 12px; color: var(--muted); margin: 14px 0 6px; }
+  .card input { width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.9); }
+  .card button { width: 100%; margin-top: 22px; padding: 12px; font-size: 14px; }
+  .err { color: #c0262d; font-size: 13px; margin-top: 12px; min-height: 18px; }
+
+  /* filters */
+  .filters { padding: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin-bottom: 16px; }
+  .filters label { display: grid; gap: 4px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+  .filters .sp { flex: 1; }
+
+  /* kpis */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
+  .kpi { padding: 20px; } .kpi b { display: block; font-size: 30px; font-weight: 500; letter-spacing: -.02em; margin-top: 4px; }
+  .kpi span { font-size: 12px; color: var(--muted); }
+  .row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .panel { padding: 22px; overflow: hidden; }
+  @media (max-width: 860px) { .kpis { grid-template-columns: repeat(2, 1fr); } .row { grid-template-columns: 1fr; } }
+
+  /* chart + bars */
+  svg { width: 100%; height: auto; display: block; }
+  .legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .bar { display: grid; grid-template-columns: 110px 1fr 44px; gap: 10px; align-items: center; font-size: 13px; margin: 9px 0; }
+  .bar div.t { height: 8px; border-radius: 99px; background: rgba(17,17,20,.06); overflow: hidden; } .bar div.t i { display: block; height: 100%; background: var(--accent); border-radius: 99px; }
+  .bar em { font-style: normal; text-align: right; color: var(--muted); }
+
+  /* tables */
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tabs button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 500; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; padding: 8px 10px; white-space: nowrap; }
+  td { padding: 10px; border-top: 1px solid var(--line); white-space: nowrap; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 12px; background: rgba(47,85,184,.1); color: var(--accent); }
+  .pill.click { background: rgba(232,80,90,.12); color: #c0262d; }
+  .muted { color: var(--muted); } .note { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  .setup { padding: 22px; margin-bottom: 16px; border-left: 3px solid var(--red); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div id="login" class="hidden">
+  <form class="card glass" id="loginForm">
+    <h1>R. A. Group admin</h1>
+    <p>Sign in to view website analytics.</p>
+    <label for="u">Username</label><input id="u" autocomplete="username" required>
+    <label for="p">Password</label><input id="p" type="password" autocomplete="current-password" required>
+    <button class="primary" type="submit">Sign in</button>
+    <div class="err" id="loginErr"></div>
+  </form>
+</div>
+
+<div id="app" class="wrap hidden">
+  <div class="top">
+    <h1>Website analytics</h1>
+    <div style="display:flex;gap:8px">
+      <button id="refresh">Refresh</button>
+      <button id="csv">Export CSV</button>
+      <button id="logout">Sign out</button>
+    </div>
+  </div>
+
+  <div id="setup" class="setup glass hidden"></div>
+
+  <div class="filters glass">
+    <label>Date range
+      <select id="range">
+        <option value="1">Today</option><option value="7">Last 7 days</option>
+        <option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option>
+        <option value="0">All time</option><option value="custom">Custom…</option>
+      </select></label>
+    <label class="hidden" id="fromW">From <input type="date" id="from"></label>
+    <label class="hidden" id="toW">To <input type="date" id="to"></label>
+    <label>Country <select id="country"><option value="">All countries</option></select></label>
+    <label>City <select id="city"><option value="">All cities</option></select></label>
+    <label>Device <select id="device"><option value="">All devices</option><option value="mobile">Mobile</option><option value="desktop">Desktop</option><option value="tablet">Tablet</option></select></label>
+    <label>Source <select id="source"><option value="">All sources</option><option value="direct">Direct</option></select></label>
+    <span class="sp"></span>
+    <button id="reset">Reset filters</button>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi glass"><span>Visitors</span><b id="kVisitors">–</b></div>
+    <div class="kpi glass"><span>Page views</span><b id="kViews">–</b></div>
+    <div class="kpi glass"><span>CTA clicks</span><b id="kClicks">–</b></div>
+    <div class="kpi glass"><span>Visitors who clicked</span><b id="kCtr">–</b></div>
+  </div>
+
+  <div class="row">
+    <div class="panel glass">
+      <h2>Traffic over time</h2>
+      <div class="legend"><span><i style="background:#9fb3e6"></i>Page views</span><span><i style="background:var(--red)"></i>CTA clicks</span></div>
+      <div id="chart"></div>
+    </div>
+    <div class="panel glass">
+      <h2>What visitors click</h2>
+      <div id="types"></div>
+      <h2 style="margin-top:22px">Devices</h2>
+      <div id="devices"></div>
+      <h2 style="margin-top:22px">Top sources</h2>
+      <div id="sources"></div>
+    </div>
+  </div>
+
+  <div class="panel glass" style="margin-bottom:16px">
+    <h2>By location</h2>
+    <div class="tabs" id="groupTabs">
+      <button data-g="countries" class="on">Countries</button><button data-g="cities">Cities</button>
+    </div>
+    <div class="scroll"><table id="locTable"></table></div>
+  </div>
+
+  <div class="panel glass">
+    <h2>Recent activity</h2>
+    <div class="tabs" id="evTabs">
+      <button data-e="" class="on">All</button><button data-e="clicks">All clicks</button>
+      <button data-e="phone">Phone</button><button data-e="email">Email</button>
+      <button data-e="map">Address</button><button data-e="cta_hero">Get in touch</button><button data-e="pageview">Page views</button>
+    </div>
+    <div class="scroll"><table id="recent"></table></div>
+    <p class="note" id="foot"></p>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const LABEL = { pageview: 'Page view', cta_hero: '“Get in touch” button', phone: 'Phone number', email: 'Email', map: 'Address / map' };
+const regionNames = (() => { try { return new Intl.DisplayNames(['en'], { type: 'region' }); } catch { return null; } })();
+const cname = (c) => (c === '??' ? 'Unknown' : (regionNames && regionNames.of(c)) || c);
+const flag = (c) => (/^[A-Z]{2}$/.test(c) ? String.fromCodePoint(...[...c].map((x) => 127397 + x.charCodeAt())) : '🌐');
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+const fmt = (n) => Number(n).toLocaleString();
+let data = null, group = 'countries', evFilter = '';
+
+function params(extra) {
+  const q = new URLSearchParams();
+  const r = $('range').value;
+  const day = 86400000;
+  const sod = new Date(); sod.setHours(0, 0, 0, 0);
+  if (r === 'custom') {
+    if ($('from').value) q.set('from', new Date($('from').value + 'T00:00:00').getTime());
+    if ($('to').value) q.set('to', new Date($('to').value + 'T23:59:59').getTime());
+  } else if (r !== '0') q.set('from', sod.getTime() - (Number(r) - 1) * day);
+  for (const k of ['country', 'city', 'device', 'source']) if ($(k).value) q.set(k, $(k).value);
+  q.set('tz', -new Date().getTimezoneOffset());
+  for (const k in extra || {}) q.set(k, extra[k]);
+  return q.toString();
+}
+
+async function load() {
+  const r = await fetch('/api/admin/stats?' + params(), { credentials: 'same-origin' });
+  if (r.status === 401) return showLogin();
+  data = await r.json();
+  $('login').classList.add('hidden'); $('app').classList.remove('hidden');
+  render();
+}
+
+function showLogin() { $('app').classList.add('hidden'); $('login').classList.remove('hidden'); $('u').focus(); }
+
+function fillSelect(sel, items, keep, all) {
+  const cur = keep;
+  sel.innerHTML = `<option value="">${all}</option>` + items.map((i) => `<option value="${esc(i.v)}">${esc(i.t)}</option>`).join('');
+  sel.value = items.some((i) => i.v === cur) ? cur : '';
+}
+
+function render() {
+  const s = $('setup');
+  if (!data.configured) {
+    s.classList.remove('hidden');
+    s.innerHTML = '<b>Analytics storage is not connected yet.</b><br>In Vercel, open your project → <b>Storage</b> → add an <b>Upstash Redis</b> database (free) and connect it to this project, then redeploy. Data starts collecting after that.';
+    return;
+  }
+  s.classList.add('hidden');
+  const t = data.totals;
+  $('kVisitors').textContent = fmt(t.visitors); $('kViews').textContent = fmt(t.views);
+  $('kClicks').textContent = fmt(t.clicks); $('kCtr').textContent = (t.ctr * 100).toFixed(1) + '%';
+
+  fillSelect($('country'), data.options.countries.map((c) => ({ v: c.c, t: flag(c.c) + ' ' + cname(c.c) + ' (' + c.n + ')' })), $('country').value, 'All countries');
+  const seen = new Set();
+  fillSelect($('city'), data.options.cities.filter((c) => { const k = c.ci || '(unknown)'; if (seen.has(k)) return false; seen.add(k); return true; })
+    .map((c) => ({ v: c.ci || '(unknown)', t: (c.ci || '(unknown)') + ' (' + c.n + ')' })), $('city').value, 'All cities');
+  const cur = $('source').value;
+  $('source').innerHTML = '<option value="">All sources</option><option value="direct">Direct</option>' + data.sources.filter((x) => x.s !== 'direct').map((x) => `<option value="${esc(x.s)}">${esc(x.s)}</option>`).join('');
+  $('source').value = cur;
+
+  chart(); bars(); locations(); recent();
+  $('foot').textContent = data.capped ? 'Showing the most recent 20,000 events; older ones are dropped automatically.' : 'Times are shown in your local timezone. Location comes from the visitor’s network, so it is approximate.';
+}
+
+function chart() {
+  const s = data.series;
+  if (!s.length) { $('chart').innerHTML = '<p class="muted" style="padding:40px 0;text-align:center">No data for this selection yet.</p>'; return; }
+  const W = 760, H = 240, L = 34, B = 26, T = 10;
+  const max = Math.max(1, ...s.map((d) => Math.max(d.views, d.clicks)));
+  const step = (W - L) / s.length, bw = Math.max(2, Math.min(28, step * 0.62));
+  const y = (v) => T + (H - T - B) * (1 - v / max);
+  let g = '';
+  for (let i = 0; i <= 4; i++) { const v = Math.round((max * i) / 4), yy = y(v); g += `<line x1="${L}" x2="${W}" y1="${yy}" y2="${yy}" stroke="rgba(17,17,20,.07)"/><text x="${L - 6}" y="${yy + 4}" text-anchor="end" font-size="10" fill="#6b6b76">${v}</text>`; }
+  let bars = '', pts = [];
+  s.forEach((d, i) => {
+    const x = L + i * step + step / 2;
+    const tip = `<title>${d.d}\n${d.views} views · ${d.visitors} visitors · ${d.clicks} clicks</title>`;
+    bars += `<g>${tip}<rect x="${x - bw / 2}" y="${y(d.views)}" width="${bw}" height="${H - B - y(d.views)}" rx="3" fill="#9fb3e6"/><rect x="${L + i * step}" y="${T}" width="${step}" height="${H - T - B}" fill="transparent"/></g>`;
+    pts.push(`${x},${y(d.clicks)}`);
+  });
+  const every = Math.ceil(s.length / 8);
+  const labels = s.map((d, i) => (i % every ? '' : `<text x="${L + i * step + step / 2}" y="${H - 8}" text-anchor="middle" font-size="10" fill="#6b6b76">${d.d.slice(5)}</text>`)).join('');
+  const dots = pts.map((p, i) => `<circle cx="${p.split(',')[0]}" cy="${p.split(',')[1]}" r="3" fill="#e8505a"><title>${s[i].d}: ${s[i].clicks} clicks</title></circle>`).join('');
+  $('chart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Traffic over time">${g}${bars}<polyline points="${pts.join(' ')}" fill="none" stroke="#e8505a" stroke-width="2" stroke-linejoin="round"/>${dots}${labels}</svg>`;
+}
+
+function barList(el, rows) {
+  const max = Math.max(1, ...rows.map((r) => r[1]));
+  el.innerHTML = rows.length ? rows.map(([k, n]) => `<div class="bar"><span>${esc(k)}</span><div class="t"><i style="width:${(n / max) * 100}%"></i></div><em>${fmt(n)}</em></div>`).join('') : '<p class="muted" style="font-size:13px">No data yet.</p>';
+}
+
+function bars() {
+  const ty = data.byType;
+  barList($('types'), ['phone', 'email', 'map', 'cta_hero'].map((k) => [LABEL[k], ty[k] || 0]));
+  const ml = Object.entries(data.mapLabels);
+  if (ml.length) $('types').innerHTML += `<p class="note">Address clicks: ${ml.map(([k, n]) => esc(k) + ' ' + n).join(' · ')}</p>`;
+  barList($('devices'), Object.entries(data.devices).filter((x) => x[1]).map(([k, n]) => [k[0].toUpperCase() + k.slice(1), n]));
+  barList($('sources'), data.sources.map((x) => [x.s === 'direct' ? 'Direct' : x.s, x.n]));
+}
+
+function locations() {
+  const rows = data[group];
+  const place = (r) => (group === 'countries' ? `${flag(r.c)} ${esc(cname(r.c))}` : `${esc(r.ci)} <span class="muted">· ${esc(cname(r.c))}</span>`);
+  $('locTable').innerHTML = `<tr><th>${group === 'countries' ? 'Country' : 'City'}</th><th class="n">Visitors</th><th class="n">Views</th><th class="n">Phone</th><th class="n">Email</th><th class="n">Address</th><th class="n">Button</th><th class="n">Clicked</th></tr>` +
+    (rows.length ? rows.map((r) => `<tr><td>${place(r)}</td><td class="n">${fmt(r.visitors)}</td><td class="n">${fmt(r.views)}</td><td class="n">${fmt(r.phone)}</td><td class="n">${fmt(r.email)}</td><td class="n">${fmt(r.map)}</td><td class="n">${fmt(r.cta_hero)}</td><td class="n">${(r.ctr * 100).toFixed(0)}%</td></tr>`).join('') : '<tr><td colspan="8" class="muted">No data yet.</td></tr>');
+}
+
+function recent() {
+  const rows = data.recent.filter((e) => !evFilter || (evFilter === 'clicks' ? e.e !== 'pageview' : e.e === evFilter));
+  $('recent').innerHTML = '<tr><th>Time</th><th>Event</th><th>Location</th><th>Device</th><th>Source</th></tr>' +
+    (rows.length ? rows.slice(0, 60).map((e) => `<tr><td>${new Date(e.t).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</td>
+      <td><span class="pill ${e.e === 'pageview' ? '' : 'click'}">${esc(LABEL[e.e] || e.e)}${e.l ? ' · ' + esc(e.l) : ''}</span></td>
+      <td>${flag(e.c)} ${esc(e.ci || '—')}${e.r ? ', ' + esc(e.r) : ''} <span class="muted">${esc(cname(e.c))}</span></td>
+      <td>${esc(e.d)}</td><td class="muted">${esc(e.ref || 'direct')}</td></tr>`).join('') : '<tr><td colspan="5" class="muted">Nothing yet.</td></tr>');
+}
+
+/* events */
+$('loginForm').addEventListener('submit', async (ev) => {
+  ev.preventDefault(); $('loginErr').textContent = '';
+  const r = await fetch('/api/admin/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ username: $('u').value, password: $('p').value }) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { $('loginErr').textContent = j.error || 'Sign in failed.'; return; }
+  $('p').value = ''; load();
+});
+$('logout').onclick = async () => { await fetch('/api/admin/logout', { method: 'POST' }); showLogin(); };
+$('refresh').onclick = load;
+$('csv').onclick = () => { location.href = '/api/admin/stats?' + params({ csv: 1 }); };
+$('range').onchange = () => { const c = $('range').value === 'custom'; $('fromW').classList.toggle('hidden', !c); $('toW').classList.toggle('hidden', !c); load(); };
+$('country').onchange = () => { $('city').value = ''; load(); };
+for (const k of ['city', 'device', 'source', 'from', 'to']) $(k).onchange = load;
+$('reset').onclick = () => { $('range').value = '30'; for (const k of ['country', 'city', 'device', 'source', 'from', 'to']) $(k).value = ''; $('fromW').classList.add('hidden'); $('toW').classList.add('hidden'); load(); };
+$('groupTabs').onclick = (e) => { if (!e.target.dataset.g) return; group = e.target.dataset.g; [...$('groupTabs').children].forEach((b) => b.classList.toggle('on', b === e.target)); locations(); };
+$('evTabs').onclick = (e) => { if (e.target.dataset.e === undefined) return; evFilter = e.target.dataset.e; [...$('evTabs').children].forEach((b) => b.classList.toggle('on', b === e.target)); recent(); };
+load();
+</script>
+</body>
+</html>

@@ -147,7 +147,7 @@
       <img src="assets/logo.png" alt="R. A. Group — Since 1946">
       <h1>Trusted by <b>generations.</b></h1>
       <p>A diversified business group from Eastern India, building enduring businesses since 1946.</p>
-      <a class="btn" href="#contact">Get in touch</a>
+      <a class="btn" href="#contact" data-track="cta_hero">Get in touch</a>
     </div>
   </header>
 
@@ -219,10 +219,10 @@
           <h2>Let’s talk.</h2>
         </div>
         <dl>
-          <div><dt>Registered office (Unit 1)</dt><dd>78, Madan Mohan Burman St, Kolkata, 700007</dd></div>
-          <div><dt>Unit 2</dt><dd>Salap, Howrah, Kolkata, West Bengal 711409</dd></div>
-          <div><dt>Phone</dt><dd><a href="tel:+919051540406">+91 90515 40406</a></dd></div>
-          <div><dt>Email</dt><dd><a href="mailto:info@rapsignal.com">info@rapsignal.com</a></dd></div>
+          <div><dt>Registered office (Unit 1)</dt><dd><a href="https://www.google.com/maps/search/?api=1&query=78+Madan+Mohan+Burman+St+Kolkata+700007" target="_blank" rel="noopener" data-track="map" data-label="Unit 1">78, Madan Mohan Burman St, Kolkata, 700007</a></dd></div>
+          <div><dt>Unit 2</dt><dd><a href="https://www.google.com/maps/search/?api=1&query=Salap+Howrah+Kolkata+West+Bengal+711409" target="_blank" rel="noopener" data-track="map" data-label="Unit 2">Salap, Howrah, Kolkata, West Bengal 711409</a></dd></div>
+          <div><dt>Phone</dt><dd><a href="tel:+919051540406" data-track="phone">+91 90515 40406</a></dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:info@rapsignal.com" data-track="email">info@rapsignal.com</a></dd></div>
           <div><dt>Office hours</dt><dd>Monday – Saturday, 10 AM – 5 PM</dd></div>
         </dl>
       </div>
@@ -231,6 +231,26 @@
 </main>
 
 <footer>© <span id="y">2026</span> R. A. Group · Since 1946</footer>
+<script>
+/* anonymous first-party analytics: page views + clicks on [data-track]; location is derived server-side, no IP is stored */
+(function () {
+  var vid;
+  try {
+    vid = localStorage.getItem('ra_vid');
+    if (!vid) { vid = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('ra_vid', vid); }
+  } catch (e) { vid = 'anon'; }
+  function send(e, l) {
+    var b = JSON.stringify({ e: e, l: l || '', v: vid, p: location.pathname, r: document.referrer });
+    try { if (navigator.sendBeacon && navigator.sendBeacon('/api/track', new Blob([b], { type: 'application/json' }))) return; } catch (_) {}
+    try { fetch('/api/track', { method: 'POST', body: b, keepalive: true, headers: { 'content-type': 'application/json' } }); } catch (_) {}
+  }
+  send('pageview');
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('[data-track]');
+    if (a) send(a.getAttribute('data-track'), a.getAttribute('data-label'));
+  });
+})();
+</script>
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
